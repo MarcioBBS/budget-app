@@ -1,0 +1,65 @@
+//GRID LAYOUT SET UP
+
+.sidebar {
+    background-color: $color-primary;
+    grid-column: sidebar-start / sidebar-end;
+    grid-row: 1 / -1;
+
+    @include respond(tab-port) {
+        grid-column: 1 / -1;
+        grid-row: sidebar-start / sidebar-end;
+    }
+}
+
+.header {    
+    grid-column: full-start / col-end 6;
+
+    @include respond(tab-small) {
+        grid-column: full-start / full-end;
+    }
+}
+
+.realtors {
+    background-color: $color-secondary;
+    grid-column: col-start 7 / full-end;
+
+    @include respond(tab-small) {
+        grid-column: full-start / full-end;
+    }
+}
+
+.features {    
+    grid-column: center-start / center-end;
+
+    margin: 12rem 0;
+
+    display: grid;    
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    grid-gap: 6rem;
+    
+    //push the content to the top.
+    align-items: start;
+}
+
+.story {
+    grid-column: full-start / full-end;
+}
+
+.homes {    
+    grid-column: center-start / center-end;
+    margin: 12rem 0;
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    grid-gap: 7rem;
+}
+
+.gallery {
+    background-color: $color-grey-light-3;
+    grid-column: full-start / full-end;
+}
+
+.footer {
+    background-color: $color-secondary;
+    grid-column: full-start / full-end;
+}
