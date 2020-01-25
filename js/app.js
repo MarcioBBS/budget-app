@@ -30,7 +30,7 @@ var budgetController = (function() {
 
          // Create new ID
          if (data.allItems[type].length > 0) {
-            ID = data.allItems[type][data.allItems[type].length -1].id + 1; // By Jonas
+            ID = data.allItems[type][data.allItems[type].length -1].id + 1;
          } else {
             ID = 0;
          }
@@ -85,11 +85,7 @@ var controller = (function(budgetCtrl, UIctrl) {
 
    var setupEventListeners = function() {
       var DOM = UIController.getDOMStrings();
-
-      /*
-       * Why two event listeners? Because one is for the mouse click and the second is
-       * for when the enter key (13 code) is pressed
-      */ 
+      
       document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
       document.addEventListener('keypress', function(evt) {
          if (evt.keyCode === 13 || evt.which === 13) {
@@ -112,7 +108,9 @@ var controller = (function(budgetCtrl, UIctrl) {
 
       // Calculate the budget
 
-      // Display the budget on the UI            
+      // Display the budget on the UI       
+      
+      console.log(newItem);
    }
 
    return {
