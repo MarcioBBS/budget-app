@@ -8,8 +8,10 @@
     box-sizing: border-box;
 }
 
-html {
-    font-size: 65%;
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 body {
@@ -19,13 +21,6 @@ body {
     position: relative;
     height: 100vh;
     font-weight: 400;
-    padding: 2rem;
-}
-
-.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
 }
 
 .right { float: right; }
@@ -46,7 +41,7 @@ body {
 
 .budget {
     position: absolute;
-    width: 35rem;
+    width: 350px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
