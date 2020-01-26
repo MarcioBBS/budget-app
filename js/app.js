@@ -49,7 +49,9 @@ var budgetController = (function() {
          return newItem;
       },
 
-      data
+      testing: function() {
+         return data
+      }      
    };
 
 })();
@@ -72,7 +74,7 @@ var UIController = (function () {
          return {
             type: document.querySelector(DOMSTrings.inputType).value, // inc or exp (Specified in the html)
             description: document.querySelector(DOMSTrings.inputDescription).value,
-            value: document.querySelector(DOMSTrings.inputValue).value
+            value: parseFloat(document.querySelector(DOMSTrings.inputValue).value)
          }         
       },
 
