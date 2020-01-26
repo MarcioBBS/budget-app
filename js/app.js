@@ -13,6 +13,16 @@ var budgetController = (function() {
       this.value = value;
    };
 
+   var calculateTotal = function(type) {
+      var sum = 0;
+
+      data.allItems[type].forEach(function(current) {
+         sum += current.value;
+      });
+
+      data.totals[type] = sum;
+   }
+
    var data = {
       allItems: {
          exp: [],
@@ -21,7 +31,9 @@ var budgetController = (function() {
       totals: {
          exp: 0,
          inc: 0
-      }
+      },
+      budget: 0,
+      percentage: -1 // non existence
    };
 
    return {
@@ -47,6 +59,33 @@ var budgetController = (function() {
 
          // Returning the new element
          return newItem;
+      },
+
+      calculateBudget: function() {
+
+         // Calculate total income and expenses
+         calculateTotal('inc');
+         calculateTotal('exp');
+
+         // Calculate the budget: income - expenses
+         data.budget = data.totals.inc - data.totals.exp;
+
+         // Calculate the percentage of spent income.
+         if (data.totals.inc > 0) {
+            data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+         } else {
+            data.percentage = -1; // non existence
+         }
+         
+      },
+
+      getBudget: function() {
+         return {
+            budget: data.budget,
+            totalInc: data.totals.inc,
+            totalExp: data.totals.exp,
+            percentage: data.percentage
+         };
       },
 
       testing: function() {
@@ -129,7 +168,7 @@ var UIController = (function () {
 var controller = (function(budgetCtrl, UIctrl) {
 
    var setupEventListeners = function() {
-      var DOM = UIController.getDOMStrings();
+      var DOM = UIctrl.getDOMStrings();
       
       document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
       document.addEventListener('keypress', function(evt) {
@@ -138,6 +177,17 @@ var controller = (function(budgetCtrl, UIctrl) {
          }
       
       });
+   };
+
+   var updateBudget = function() {
+      // Calculate the budget
+      budgetCtrl.calculateBudget();
+
+      // Return the budget
+      var budget = budgetCtrl.getBudget();
+
+      // Display the budget on the UI
+      console.log(budget);
    }
 
    var ctrlAddItem  = function() {
@@ -145,7 +195,7 @@ var controller = (function(budgetCtrl, UIctrl) {
       var input, newItem
 
       // Get the field input data
-      input = UIController.getInput();
+      input = UIctrl.getInput();
 
       // Verify if the fields are not empty, and value bigger than 0
       if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
@@ -157,21 +207,20 @@ var controller = (function(budgetCtrl, UIctrl) {
          UIctrl.addListItem(newItem, input.type);
 
          // Clear the fields
-         UIctrl.clearFields(); 
-
-         // Calculate the budget
-
-         // Display the budget on the UI
+         UIctrl.clearFields();       
+         
+         // Calculate and update budget
+         updateBudget();
       }      
       
-   }
+   };
 
    return {
       init: function() {
          setupEventListeners();
          console.log('Applicaton has started');
       }
-   }   
+   };  
 
 })(budgetController, UIController);
 
