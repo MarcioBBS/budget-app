@@ -50,7 +50,7 @@ var budgetController = (function() {
       },
 
       testing: function() {
-         return data
+         return data;
       }      
    };
 
@@ -141,23 +141,28 @@ var controller = (function(budgetCtrl, UIctrl) {
    }
 
    var ctrlAddItem  = function() {
+
       var input, newItem
 
       // Get the field input data
       input = UIController.getInput();
 
-      // Add the item to the budget controller      
-      newItem = budgetCtrl.addItem(input.type, input.description, input.value);      
+      // Verify if the fields are not empty, and value bigger than 0
+      if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
 
-      // Add the item to the UI
-      UIctrl.addListItem(newItem, input.type);
+         // Add the item to the budget controller      
+         newItem = budgetCtrl.addItem(input.type, input.description, input.value);      
 
-      // Clear the fields
-      UIctrl.clearFields(); 
+         // Add the item to the UI
+         UIctrl.addListItem(newItem, input.type);
 
-      // Calculate the budget
+         // Clear the fields
+         UIctrl.clearFields(); 
 
-      // Display the budget on the UI       
+         // Calculate the budget
+
+         // Display the budget on the UI
+      }      
       
    }
 
