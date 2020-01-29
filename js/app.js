@@ -24,16 +24,16 @@ var budgetController = (function() {
    }
 
    var data = {
-      allItems: {
+      allItems: { // It storages the object containing the id, description and value - For Expenses and Incomes
          exp: [],
          inc: []
       },
-      totals: {
+      totals: { // It storages the total sum of Expenses/Incomes
          exp: 0,
          inc: 0
       },
-      budget: 0,
-      percentage: -1 // non existence
+      budget: 0, // It storages the global budget
+      percentage: -1 // non existence. It's the percentage of the expenses from the global budget.
    };
 
    return {
@@ -127,12 +127,10 @@ var UIController = (function () {
          // Create HTML string with placeholder text
          if (type === 'inc') {
             element = DOMSTrings.incomeContainer;
-
             html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
-
+            
          } else if (type === 'exp') {
             element = DOMSTrings.expensesContainer;
-
             html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
          }       
 
@@ -150,7 +148,7 @@ var UIController = (function () {
          
          fields = document.querySelectorAll(DOMSTrings.inputDescription + ', ' + DOMSTrings.inputValue );
 
-         // List to an array
+         // Convert list to an array
          fieldsArr = Array.prototype.slice.call(fields);
 
          fieldsArr.forEach(function(current, index, array){
@@ -172,7 +170,7 @@ var UIController = (function () {
             document.querySelector(DOMSTrings.percentageLabel).textContent = '---'
          }
       },
-
+      
       getDOMStrings: function() {
          return DOMSTrings;         
       }
