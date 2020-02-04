@@ -223,8 +223,6 @@ var UIController = (function () {
 
       displayPercentages: function(percentages) {
          var fields = document.querySelectorAll(DOMSTrings.expensesPercLabel);
-         console.log(fields);
-
 
          var nodeListForEach = function(list, callback) {
             for (var i = 0; i < list.length; i++) {
@@ -239,7 +237,6 @@ var UIController = (function () {
                current.textContent = '---';
             }
          });
-
       },
       
       getDOMStrings: function() {
