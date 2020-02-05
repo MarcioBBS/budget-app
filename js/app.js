@@ -178,6 +178,12 @@ var UIController = (function () {
 
    };
 
+   var nodeListForEach = function(list, callback) {
+      for (var i = 0; i < list.length; i++) {
+         callback(list[i], i);
+      }
+   };
+
    return {
       getInput: function() {
          return {
@@ -247,13 +253,7 @@ var UIController = (function () {
       },
 
       displayPercentages: function(percentages) {
-         var fields = document.querySelectorAll(DOMSTrings.expensesPercLabel);
-
-         var nodeListForEach = function(list, callback) {
-            for (var i = 0; i < list.length; i++) {
-               callback(list[i], i);
-            }
-         };
+         var fields = document.querySelectorAll(DOMSTrings.expensesPercLabel);   
 
          nodeListForEach(fields, function(current, index){
             if (percentages[index] > 0) {
@@ -274,6 +274,19 @@ var UIController = (function () {
          
          document.querySelector(DOMSTrings.dateLabel).textContent = months[month] + ' ' + year;
          
+      },
+
+      changedType: function() {
+         var fields = document.querySelectorAll(
+            DOMSTrings.inputType + ',' +
+            DOMSTrings.inputDescription + ',' +
+            DOMSTrings.inputValue);
+
+         nodeListForEach(fields, function(cur){
+            cur.classList.toggle('red-focus');
+            document.querySelector(DOMSTrings.inputButton).classList.toggle('red');
+         });
+
       },
       
       getDOMStrings: function() {
@@ -298,6 +311,7 @@ var controller = (function(budgetCtrl, UIctrl) {
       });
 
       document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem); // Using Event Delegation
+      document.querySelector(DOM.inputType).addEventListener('change', UIctrl.changedType);
    };
 
    var updateBudget = function() {
